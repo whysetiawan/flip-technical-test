@@ -7,6 +7,7 @@ module.exports = function (api) {
         'babel-plugin-react-compiler',
         {
           runtimeModule: 'react-compiler-runtime',
+          target: '18',
         },
       ], // must run first!
       'react-native-reanimated/plugin',
