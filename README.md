@@ -1,6 +1,6 @@
 # Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app). This app using **React Compiler**, so you won't find any memoize function or hooks that optimize react app.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app). This app purpose for Technical Test at Flip. This app using **React Compiler**, so you won't find any memoize function or hooks that optimize react app.
 
 ## Get started
 
