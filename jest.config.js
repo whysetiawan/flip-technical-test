@@ -19,4 +19,6 @@ module.exports = {
       'react-compiler-runtime|' +
       'sentry-expo|react-native-svg)',
   ],
+
+  collectCoverageFrom: ['./src/**/*.{js,jsx,ts,tsx}', '!**/__tests__/**', '!**/__mocks__/**'],
 };

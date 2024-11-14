@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Alert, Platform, Pressable, Text, ToastAndroid, View } from 'react-native';
 
 import type { Transaction } from '#/modules/transaction/domain/entities/transaction';
+import { testIds } from '#/shared/constants/testIds';
 import { parseAmount, parseDate } from '#/shared/utils';
 
 const TransactionDetail: React.FC = () => {
@@ -26,6 +27,7 @@ const TransactionDetail: React.FC = () => {
         <Text className="text-lg font-bold">
           ID TRANSAKSI: #{params.id}{' '}
           <MaterialIcons
+            testID={testIds.trxDetailPage.copyTrxIdButton}
             onPress={copyTransactionId}
             name="content-copy"
             color="#e1734b"
@@ -36,7 +38,7 @@ const TransactionDetail: React.FC = () => {
 
       <View className="flex-row justify-between p-5 border-b border-gray-200 bg-white">
         <Text className="text-lg font-bold">DETAIL TRANSAKSI</Text>
-        <Pressable onPress={router.back}>
+        <Pressable testID={testIds.trxDetailPage.closeButton} onPress={router.back}>
           <Text className="text-lg text-primary">Tutup</Text>
         </Pressable>
       </View>
@@ -50,30 +52,42 @@ const TransactionDetail: React.FC = () => {
         <View className="flex-row justify-between">
           <View className="w-1/2 gap-y-4">
             <View>
-              <Text className="text-lg font-bold">{params.beneficiaryName.toUpperCase()}</Text>
-              <Text className="text-lg">{params.accountNumber}</Text>
+              <Text testID={testIds.trxDetailPage.beneficiaryName} className="text-lg font-bold">
+                {params.beneficiaryName.toUpperCase()}
+              </Text>
+              <Text testID={testIds.trxDetailPage.accountNumber} className="text-lg">
+                {params.accountNumber}
+              </Text>
             </View>
 
             <View>
               <Text className="text-lg font-bold">BERITA TRANSFER</Text>
-              <Text className="text-lg">{params.remark}</Text>
+              <Text testID={testIds.trxDetailPage.remark} className="text-lg">
+                {params.remark}
+              </Text>
             </View>
 
             <View>
               <Text className="text-lg font-bold">WAKTU DIBUAT</Text>
-              <Text className="text-lg">{parseDate(params.createdAt)}</Text>
+              <Text testID={testIds.trxDetailPage.createdAt} className="text-lg">
+                {parseDate(params.createdAt)}
+              </Text>
             </View>
           </View>
 
           <View className="w-1/3 gap-y-4">
             <View>
               <Text className="text-lg font-bold">NOMINAL</Text>
-              <Text className="text-lg">{parseAmount(params.amount)}</Text>
+              <Text testID={testIds.trxDetailPage.amount} className="text-lg">
+                {parseAmount(params.amount)}
+              </Text>
             </View>
 
             <View>
               <Text className="text-lg font-bold">KODE UNIK</Text>
-              <Text className="text-lg">{params.uniqueCode}</Text>
+              <Text testID={testIds.trxDetailPage.uniqueCode} className="text-lg">
+                {params.uniqueCode}
+              </Text>
             </View>
           </View>
         </View>
