@@ -1,7 +1,9 @@
 export const testIds = {
   trxListPage: {
-    loadingSkeleton: 'trx_list_page#loading_skeleton',
-    filterButton: 'trx_list_page#filter_button',
+    list: 'trx_list_page#transaction_list',
+    trxItem: (id: string) => `trx_list_page#transaction_item_${id}`,
+    shimmer: (idx: string | number) => `trx_list_page#loading_skeleton_${idx}`,
+    sortButton: 'trx_list_page#sort_button',
     backdrop: 'trx_list_page#backdrop',
     searchInput: 'trx_list_page#search_input',
     senderBank: 'trx_list_page#sender_bank',
@@ -9,7 +11,6 @@ export const testIds = {
     beneficiaryBank: 'trx_list_page#beneficiary_bank',
     amount: 'trx_list_page#amount',
     createdAt: 'trx_list_page#created_at',
-    transactionItem: 'trx_list_page#transaction_item',
     statusMarker: 'trx_list_page#status_marker',
   },
   trxDetailPage: {

@@ -1,11 +1,11 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Modal, Pressable, Text, View } from 'react-native';
 
-import type { ITransactionFilter } from '#/modules/transaction/presentation/TransactionList/TransactionListPage';
+import type { ITransactionSort } from '#/modules/transaction/presentation/TransactionList/TransactionListPage';
 import BackDrop from '#/shared/components/Backdrop';
 import { testIds } from '#/shared/constants/testIds';
 
-const FILTER_OPTIONS: ITransactionFilter[] = [
+const SORT_OPTIONS: ITransactionSort[] = [
   {
     label: 'URUTKAN',
     value: 'none-asc',
@@ -28,31 +28,31 @@ const FILTER_OPTIONS: ITransactionFilter[] = [
   },
 ];
 
-export interface TransactionListFilterProps {
+export interface TransactionListSortProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedFilter?: ITransactionFilter;
-  onSelectFilter?: (filter: ITransactionFilter) => void;
+  selectedSort?: ITransactionSort;
+  onSelectSort?: (sort: ITransactionSort) => void;
 }
 
-const TransactionListFilter: React.FC<TransactionListFilterProps> = ({
+const TransactionListSort: React.FC<TransactionListSortProps> = ({
   isOpen,
   onClose,
-  onSelectFilter,
-  selectedFilter,
+  onSelectSort,
+  selectedSort,
 }) => {
   return (
     <Modal transparent visible={isOpen} onRequestClose={onClose}>
       <View className="flex-1 justify-center items-center">
         <BackDrop testID={testIds.trxListPage.backdrop} onPress={onClose}>
           <View className="bg-white w-[90%] rounded-md px-5 py-10 shadow-sm gap-y-8">
-            {FILTER_OPTIONS.map((option) => {
-              const isSelected = option.value === selectedFilter?.value;
+            {SORT_OPTIONS.map((option) => {
+              const isSelected = option.value === selectedSort?.value;
               return (
                 <Pressable
                   key={option.label}
                   onPress={() => {
-                    onSelectFilter?.(option);
+                    onSelectSort?.(option);
                     onClose();
                   }}
                   className="flex-row items-center gap-x-2">
@@ -72,4 +72,4 @@ const TransactionListFilter: React.FC<TransactionListFilterProps> = ({
   );
 };
 
-export default TransactionListFilter;
+export default TransactionListSort;

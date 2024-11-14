@@ -17,7 +17,7 @@ describe('TransactionListHeader', () => {
   it('should call onSearchChange when text changes', async () => {
     const onSearchChangeMock = jest.fn();
     const { user } = setupComponent(
-      <TransactionListHeader onSearchChange={onSearchChangeMock} onFilterPress={jest.fn()} />,
+      <TransactionListHeader onSearchChange={onSearchChangeMock} onSortPress={jest.fn()} />,
     );
 
     const { getByTestId } = screen;
@@ -28,30 +28,30 @@ describe('TransactionListHeader', () => {
     expect(onSearchChangeMock).toHaveBeenCalledWith('test search');
   });
 
-  it('should call onFilterPress when filter button is pressed', async () => {
-    const onFilterPressMock = jest.fn();
+  it('should call onSort when sort button is pressed', async () => {
+    const onSortMock = jest.fn();
     const { user } = setupComponent(
-      <TransactionListHeader onSearchChange={jest.fn()} onFilterPress={onFilterPressMock} />,
+      <TransactionListHeader onSearchChange={jest.fn()} onSortPress={onSortMock} />,
     );
 
     const { getByTestId } = screen;
 
-    const filterButton = getByTestId(testIds.trxListPage.filterButton);
-    await user.press(filterButton);
+    const sortButton = getByTestId(testIds.trxListPage.sortButton);
+    await user.press(sortButton);
 
-    expect(onFilterPressMock).toHaveBeenCalled();
+    expect(onSortMock).toHaveBeenCalled();
   });
 
-  it('should display the correct labelFilter text', () => {
-    const labelFilter = 'Filter Label';
+  it('should display the correct sortByLabel text', () => {
+    const sortByLabel = 'URUTKAN';
     const { getByText } = setupComponent(
       <TransactionListHeader
         onSearchChange={jest.fn()}
-        onFilterPress={jest.fn()}
-        labelFilter={labelFilter}
+        onSortPress={jest.fn()}
+        sortByLabel={sortByLabel}
       />,
     );
 
-    expect(getByText(labelFilter)).toBeTruthy();
+    expect(getByText(sortByLabel)).toBeTruthy();
   });
 });

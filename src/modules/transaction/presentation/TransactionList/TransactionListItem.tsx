@@ -14,7 +14,7 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({ transaction }
   const router = useRouter();
   return (
     <Pressable
-      testID={testIds.trxListPage.transactionItem}
+      testID={testIds.trxListPage.trxItem(transaction.id)}
       onPress={() =>
         router.navigate({
           pathname: `/transaction/[id]`,

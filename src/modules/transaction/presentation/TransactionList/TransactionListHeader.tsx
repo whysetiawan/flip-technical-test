@@ -7,14 +7,14 @@ import { testIds } from '#/shared/constants/testIds';
 
 export interface TransactionListHeaderProps {
   onSearchChange: (search: string) => void;
-  onFilterPress: () => void;
-  labelFilter?: string;
+  onSortPress: () => void;
+  sortByLabel?: string;
 }
 
 const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
   onSearchChange,
-  onFilterPress,
-  labelFilter,
+  onSortPress,
+  sortByLabel,
 }) => {
   return (
     <Input.Outlined
@@ -24,10 +24,10 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
       placeholder="Cari nama, bank, atau nominal"
       suffix={
         <Pressable
-          testID={testIds.trxListPage.filterButton}
-          onPress={onFilterPress}
+          testID={testIds.trxListPage.sortButton}
+          onPress={onSortPress}
           className="flex-row items-center">
-          <Text className="text-primary font-bold">{labelFilter}</Text>
+          <Text className="text-primary font-bold">{sortByLabel}</Text>
           <Ionicons name="chevron-down" size={18} color="#e1734b" />
         </Pressable>
       }

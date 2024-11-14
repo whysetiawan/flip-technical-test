@@ -51,7 +51,7 @@ describe('TransactionListItem', () => {
 
     const { user } = setupComponent(component);
     const { getByTestId } = screen;
-    await user.press(getByTestId(testIds.trxListPage.transactionItem));
+    await user.press(getByTestId(testIds.trxListPage.trxItem(mockTransaction.id)));
 
     expect(navigate).toHaveBeenCalledWith({
       pathname: `/transaction/[id]`,

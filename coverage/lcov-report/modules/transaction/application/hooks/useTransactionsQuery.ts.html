@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -114,9 +114,7 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -125,17 +123,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,11 +142,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -178,16 +174,16 @@ type Order = 'asc' | 'desc';
 &nbsp;
 export type SortBy = `${Sort}-${Order}`;
 &nbsp;
-export const useTransactionsQuery = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(s</span></span>earchQuery = '', sortBy: SortBy) =&gt; {</span>
-  const [sort, order] = <span class="cstat-no" title="statement not covered" >sortBy.split('-');</span>
-  const query = useQuery(<span class="cstat-no" title="statement not covered" >{</span>
-    queryKey: <span class="cstat-no" title="statement not covered" >['transactions'],</span>
+export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) =&gt; {
+  const [sort, order] = sortBy.split('-');
+  const query = useQuery({
+    queryKey: ['transactions'],
     queryFn: async () =&gt; {
       return transactionRepositoryImpl.getTransactions();
     },
 &nbsp;
     select: (data) =&gt; {
-      const filteredData = data.filter((item) =&gt; {
+      let filteredData = data.filter((item) =&gt; {
         return (
           item.beneficiaryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
           item.senderBank.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -197,7 +193,7 @@ export const useTransactionsQuery = <span class="cstat-no" title="statement not 
       });
 &nbsp;
       if (sort === 'name') {
-        filteredData.sort((a, b) =&gt; {
+        filteredData = filteredData.toSorted((a, b) =&gt; {
           if (order === 'asc') {
             return a.beneficiaryName.localeCompare(b.beneficiaryName);
           }
@@ -206,7 +202,7 @@ export const useTransactionsQuery = <span class="cstat-no" title="statement not 
       }
 &nbsp;
       if (sort === 'date') {
-        filteredData.sort((a, b) =&gt; {
+        filteredData = filteredData.toSorted((a, b) =&gt; {
           if (order === 'asc') {
             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
           }
@@ -214,9 +210,7 @@ export const useTransactionsQuery = <span class="cstat-no" title="statement not 
         });
       }
 &nbsp;
-      return {
-        pages: filteredData,
-      };
+      return filteredData;
     },
   });
 &nbsp;
@@ -229,7 +223,7 @@ export const useTransactionsQuery = <span class="cstat-no" title="statement not 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-14T15:48:30.326Z
+                at 2024-11-14T17:07:44.572Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
