@@ -1,6 +1,8 @@
+import type { ListRenderItem } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
+import { cssInterop } from 'nativewind';
 import { useState } from 'react';
-import type { ListRenderItem } from 'react-native';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { RefreshControl, View } from 'react-native';
 
 import type { SortBy } from '#/modules/transaction/application/hooks/useTransactionsQuery';
 import { useTransactionsQuery } from '#/modules/transaction/application/hooks/useTransactionsQuery';
@@ -17,6 +19,12 @@ import { debounce } from '#/shared/utils';
 // The indices of the sticky headers.
 // Place this outside the component to prevent re-creating the array on each render.
 // const stickyHeaderIndices = [0];
+
+cssInterop(FlashList, {
+  contentContainerClassName: {
+    target: 'contentContainerStyle',
+  },
+});
 
 const dummy = Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }) as Transaction);
 
@@ -45,7 +53,7 @@ const TransactionList = () => {
     return <View className="h-2" />;
   };
 
-  const _keyExtractor = (item: Transaction) => item.id.toString();
+  // const _keyExtractor = (item: Transaction) => item.id.toString();
 
   const _onRefresh = () => {
     refetch();
@@ -61,7 +69,24 @@ const TransactionList = () => {
 
   return (
     <>
-      <FlatList
+      <View className="px-4 pt-8 z-50">
+        <TransactionListHeader
+          onSortPress={_openSortModal}
+          onSearchChange={debounce(setSearchQuery, 500)}
+          sortByLabel={selectedSort.label}
+        />
+      </View>
+
+      <FlashList
+        testID={testIds.trxListPage.list}
+        contentContainerClassName="pt-4 pb-4 px-4"
+        refreshControl={<RefreshControl refreshing={false} onRefresh={_onRefresh} />}
+        data={isFetching ? dummy : data}
+        renderItem={_renderItem}
+        estimatedItemSize={102}
+        ItemSeparatorComponent={_renderSeparator}
+      />
+      {/* <FlatList
         testID={testIds.trxListPage.list}
         contentContainerClassName="pt-8 pb-4 px-4 flex-grow"
         refreshControl={<RefreshControl refreshing={false} onRefresh={_onRefresh} />}
@@ -84,7 +109,7 @@ const TransactionList = () => {
         windowSize={15}
         initialNumToRender={10}
         maxToRenderPerBatch={7}
-      />
+      /> */}
       <TransactionListSort
         selectedSort={selectedSort}
         onSelectSort={setSelectedSort}

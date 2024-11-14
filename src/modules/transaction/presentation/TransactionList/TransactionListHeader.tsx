@@ -20,7 +20,6 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
     <Input.Outlined
       testID={testIds.trxListPage.searchInput}
       onChangeText={onSearchChange}
-      className="mb-4"
       placeholder="Cari nama, bank, atau nominal"
       suffix={
         <Pressable

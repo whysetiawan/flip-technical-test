@@ -9,6 +9,7 @@ module.exports = {
     '@testing-library/jest-native/extend-expect',
     '<rootDir>/mocks/server.ts',
   ],
+  setupFiles: ['@shopify/flash-list/jestSetup'],
   transformIgnorePatterns: [
     'node_modules/(?!' +
       '((jest-)?react-native(-.*)?|' +
