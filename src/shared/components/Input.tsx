@@ -17,8 +17,11 @@ const Outlined = React.forwardRef<TextInput, OutlinedProps>((props, ref) => {
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View
+      // style={{
+      //   padding: 12,
+      // }}
       className={cn(
-        'border border-gray-400 rounded-md bg-white p-4 h-10 flex-row items-center',
+        'rounded-md bg-white p-4 flex-row items-center',
         className,
         isFocused && 'border-primary',
       )}>
