@@ -34,7 +34,7 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({ transaction }
             <Text className="text-md font-semibold">
               {parseAmount(transaction.amount)}
               <Text className="text-md font-bold"> • </Text>
-              {parseDate(transaction.completedAt)}
+              {parseDate(transaction.createdAt)}
             </Text>
           </View>
         </View>

@@ -9,7 +9,7 @@ import { parseAmount, parseDate } from '#/shared/utils';
 const TransactionDetail: React.FC = () => {
   const router = useRouter();
   // @ts-expect-error - It's okay to ignore this error
-  // Because Expo Router expect the params to be a string
+  // Because Expo Router expect the params values to be a string
   const params = useLocalSearchParams<Transaction>();
 
   const copyTransactionId = async () => {

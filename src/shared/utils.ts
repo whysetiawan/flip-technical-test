@@ -6,6 +6,7 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
+// format amount to Indonesian currency
 export const parseAmount = (amount: number) => {
   // remove Rp. and ,00
   return new Intl.NumberFormat('id-ID', {
@@ -16,6 +17,26 @@ export const parseAmount = (amount: number) => {
   })
     .format(amount)
     .replace(/\s/g, '');
+};
+
+export const parseAmountManual = (amount: number) => {
+  const str = amount.toString();
+
+  if (str.length < 3) {
+    return `Rp${str}`;
+  }
+
+  let result = '';
+
+  for (let i = str.length - 1; i >= 0; i--) {
+    if ((str.length - i) % 3 === 0) {
+      result = `.${str[i]}${result}`;
+    } else {
+      result = `${str[i]}${result}`;
+    }
+  }
+
+  return `Rp${result}`;
 };
 
 export const parseDate = (date: string) => {
@@ -41,10 +62,9 @@ export const debounce = <T extends (...args: any[]) => any>(fn: T, delay: number
 };
 
 export const throttle = (func: Function, time: number) => {
-  let lastRun = Date.now();
-
+  let lastRun: number | null = null;
   return (...args: any) => {
-    if (Date.now() - lastRun >= time) {
+    if (!lastRun || Date.now() - lastRun >= time) {
       func(...args);
       lastRun = Date.now();
     }
