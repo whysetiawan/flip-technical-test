@@ -1,28 +1,27 @@
 import React from 'react';
-import type { TextInputProps, ViewStyle, StyleProp, TextStyle } from 'react-native';
-import { TextInput, View, StyleSheet } from 'react-native';
+import type { TextInputProps } from 'react-native';
+import { TextInput, View } from 'react-native';
 import colors from 'tailwindcss/colors';
 
+import { cn } from '#/shared/utils';
+
 export interface OutlinedProps extends Omit<TextInputProps, 'style'> {
-  containerStyle?: StyleProp<ViewStyle>;
-  inputStyle?: StyleProp<TextStyle>;
+  className?: string;
+  inputClassName?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
-  tintColor?: ({ focused }: { focused: boolean }) => string;
 }
 
 const Outlined = React.forwardRef<TextInput, OutlinedProps>((props, ref) => {
-  const { containerStyle, inputStyle, ...inputProps } = props;
+  const { className, inputClassName, ...inputProps } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View
-      style={StyleSheet.flatten([
-        styles.outlinedContainer,
-        containerStyle,
-        {
-          borderColor: props.tintColor?.({ focused: isFocused }) ?? '#d9d9d9',
-        },
-      ])}>
+      className={cn(
+        'border border-gray-400 rounded-md bg-white p-4 h-10 flex-row items-center',
+        className,
+        isFocused && 'border-primary',
+      )}>
       {props.prefix}
       <TextInput
         {...inputProps}
@@ -36,7 +35,7 @@ const Outlined = React.forwardRef<TextInput, OutlinedProps>((props, ref) => {
           props.onBlur?.(e);
         }}
         placeholderTextColor={inputProps.placeholderTextColor ?? colors.gray[400]}
-        style={StyleSheet.flatten([styles.inputStyle, inputStyle])}
+        className={cn('flex-1', inputClassName)}
       />
       {props.suffix}
     </View>
@@ -46,25 +45,22 @@ const Outlined = React.forwardRef<TextInput, OutlinedProps>((props, ref) => {
 Outlined.displayName = 'Outlined';
 
 export interface UnderlinedProps extends Omit<TextInputProps, 'style'> {
-  containerStyle?: StyleProp<ViewStyle>;
-  inputStyle?: StyleProp<TextStyle>;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
-  tintColor?: ({ focused }: { focused: boolean }) => string;
+  inputClassName?: string;
+  className?: string;
 }
 
 const Underlined = React.forwardRef<TextInput, UnderlinedProps>((props, ref) => {
-  const { containerStyle, inputStyle, ...inputProps } = props;
+  const { className, inputClassName, ...inputProps } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View
-      style={StyleSheet.flatten([
-        styles.underlinedContainer,
-        containerStyle,
-        {
-          borderColor: props.tintColor?.({ focused: isFocused }) ?? '#d9d9d9',
-        },
-      ])}>
+      className={cn(
+        'border-b border-gray-400 px-2 py-3 flex-row items-center',
+        className,
+        isFocused && 'border-primary',
+      )}>
       {props.prefix}
       <TextInput
         {...inputProps}
@@ -78,7 +74,7 @@ const Underlined = React.forwardRef<TextInput, UnderlinedProps>((props, ref) => 
           props.onBlur?.(e);
         }}
         placeholderTextColor={inputProps.placeholderTextColor ?? colors.gray[400]}
-        style={StyleSheet.flatten([styles.inputStyle, inputStyle])}
+        className={cn('flex-1', inputClassName)}
       />
       {props.suffix}
     </View>
@@ -86,30 +82,5 @@ const Underlined = React.forwardRef<TextInput, UnderlinedProps>((props, ref) => 
 });
 
 Underlined.displayName = 'Underlined';
-
-const styles = StyleSheet.create({
-  outlinedContainer: {
-    borderWidth: 1,
-    borderColor: colors.gray[400],
-    elevation: 1,
-    borderRadius: 8,
-    backgroundColor: 'white',
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  inputStyle: {
-    flex: 1,
-  },
-  underlinedContainer: {
-    borderBottomWidth: 1,
-    borderColor: colors.gray[400],
-    paddingHorizontal: 2,
-    paddingVertical: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
 
 export default { Outlined, Underlined };

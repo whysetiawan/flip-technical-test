@@ -1,22 +1,28 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import colors from 'tailwindcss/colors';
 
 import Input from '#/shared/components/Input';
 
 interface TransactionListHeaderProps {
   onSearchChange: (search: string) => void;
+  onFilterPress: () => void;
+  labelFilter?: string;
 }
 
-const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({ onSearchChange }) => {
+const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
+  onSearchChange,
+  onFilterPress,
+  labelFilter,
+}) => {
   return (
     <Input.Outlined
       onChangeText={onSearchChange}
+      className="mb-4"
       placeholder="Cari nama, bank, atau nominal"
-      containerStyle={styles.container}
       suffix={
-        <Pressable className="flex-row items-center">
-          <Text className="text-primary font-bold">URUTKAN</Text>
+        <Pressable onPress={onFilterPress} className="flex-row items-center">
+          <Text className="text-primary font-bold">{labelFilter}</Text>
           <Ionicons name="chevron-down" size={18} color="#e1734b" />
         </Pressable>
       }
@@ -24,13 +30,5 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({ onSearchC
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 0,
-    elevation: 0,
-    marginBottom: 16,
-  },
-});
 
 export default TransactionListHeader;

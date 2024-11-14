@@ -1,65 +1,29 @@
 import { type PropsWithChildren } from 'react';
-import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import type { PressableProps } from 'react-native';
+import { Pressable } from 'react-native';
 
-interface BackDropProps {
+import { cn } from '#/shared/utils';
+
+interface BackDropProps extends PressableProps {
   onPress?: () => void;
-  style?: StyleProp<ViewStyle>;
+  className?: string;
   visible?: boolean;
 }
 
-const BackDrop: React.FC<PropsWithChildren<BackDropProps>> = ({
-  onPress,
-  style,
-  children,
-  visible,
-}) => {
+const BackDrop: React.FC<PropsWithChildren<BackDropProps>> = ({ onPress, children, ...props }) => {
   return (
     <>
       <Pressable
+        {...props}
         onPress={onPress}
-        style={[
-          styles.container,
-          styles.backdrop,
-          styles.abs,
-          {
-            display: visible ? 'flex' : 'none',
-            zIndex: 0,
-          },
-        ]}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        }}
+        className={cn('absolute top-0 bottom-0 left-0 right-0', props.className && props.className)}
       />
-      <View
-        style={[
-          // styles.abs,
-          style,
-          {
-            display: visible ? 'flex' : 'none',
-            flex: 1,
-            // zIndex: 1,
-            // height: '100%',
-            // width: '100%',
-          },
-        ]}>
-        {children}
-      </View>
+      {children}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  abs: {
-    position: 'absolute',
-    overflow: 'hidden',
-  },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  container: {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    // cursor: 'auto',
-  },
-});
 
 export default BackDrop;
