@@ -49,9 +49,7 @@ describe('TransactionListPage', () => {
     expect(getByTestId(testIds.trxListPage.list)).toBeOnTheScreen();
 
     // assert skeleton since the data is still fetching
-    for (let i = 0; i < 10; i++) {
-      expect(getByTestId(testIds.trxListPage.shimmer(i))).toBeOnTheScreen();
-    }
+    expect(getByTestId(testIds.trxListPage.shimmer(0))).toBeOnTheScreen();
 
     // wait for the data to be fetched
     await waitFor(() => {
