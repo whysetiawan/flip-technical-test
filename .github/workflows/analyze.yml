@@ -56,4 +56,8 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: yarn test
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          custom-title: 'Coverage Report for App'
+          test-script: yarn test --maxWorker=1
+          package-manager: yarn
