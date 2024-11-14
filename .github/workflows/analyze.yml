@@ -57,9 +57,7 @@ jobs:
 
       - name: Run tests
         uses: ArtiomTr/jest-coverage-report-action@v2
-        id: app_tests
         with:
-          custom-title: 'Coverage Report for app'
-          test-script: yarn test -u --maxWorker=1
+          custom-title: 'Coverage Report for App'
+          test-script: yarn test --maxWorker=1
           package-manager: yarn
-          annotations: failed-tests
