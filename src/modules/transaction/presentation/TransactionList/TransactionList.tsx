@@ -20,7 +20,7 @@ const dummy = Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }) as Tra
 
 const TransactionList = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { data, refetch, isFetching } = useTransactionsQuery(searchQuery, 'date', 'asc');
+  const { data, refetch, isFetching } = useTransactionsQuery(searchQuery, 'none-asc');
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const trx = data?.pages.flat() ?? [];

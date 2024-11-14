@@ -2,10 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 
 import transactionRepositoryImpl from '#/modules/transaction/data/transactionRepositoryImpl';
 
-type SortBy = 'name' | 'date' | 'none';
+type Sort = 'name' | 'date' | 'none';
 type Order = 'asc' | 'desc';
 
-export const useTransactionsQuery = (searchQuery = '', sort: SortBy = 'none', order: Order) => {
+export type SortBy = `${Sort}-${Order}`;
+
+export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
+  const [sort, order] = sortBy.split('-');
   const query = useQuery({
     queryKey: ['transactions'],
     queryFn: async () => {
