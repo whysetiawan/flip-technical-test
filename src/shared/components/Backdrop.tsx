@@ -18,8 +18,9 @@ const BackDrop: React.FC<PropsWithChildren<BackDropProps>> = ({ onPress, childre
         onPress={onPress}
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          position: 'absolute',
         }}
-        className={cn('absolute top-0 bottom-0 left-0 right-0', props.className && props.className)}
+        className={cn('h-full w-full', props.className && props.className)}
       />
       {children}
     </>

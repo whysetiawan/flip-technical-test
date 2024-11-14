@@ -6,7 +6,7 @@ import TransactionListPage from '#/modules/transaction/presentation/TransactionL
 const Index = () => {
   return (
     <>
-      <StatusBar translucent={false} />
+      <StatusBar translucent />
       <TransactionListPage />
     </>
   );
