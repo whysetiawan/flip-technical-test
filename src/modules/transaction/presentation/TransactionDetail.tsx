@@ -1,7 +1,7 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Pressable, Text, ToastAndroid, View } from 'react-native';
+import { Alert, Platform, Pressable, Text, ToastAndroid, View } from 'react-native';
 
 import type { Transaction } from '#/modules/transaction/domain/entities/transaction';
 import { parseAmount, parseDate } from '#/shared/utils';
@@ -14,7 +14,10 @@ const TransactionDetail: React.FC = () => {
 
   const copyTransactionId = async () => {
     await Clipboard.setStringAsync(params.id);
-    ToastAndroid.show('ID transaksi berhasil disalin', ToastAndroid.SHORT);
+    if (Platform.OS === 'android') {
+      return ToastAndroid.show('ID transaksi berhasil disalin', ToastAndroid.SHORT);
+    }
+    return Alert.alert('Pemberitahuan', 'ID transaksi berhasil disalin');
   };
 
   return (
