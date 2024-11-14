@@ -16,7 +16,7 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
     },
 
     select: (data) => {
-      const filteredData = data.filter((item) => {
+      let filteredData = data.filter((item) => {
         return (
           item.beneficiaryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
           item.senderBank.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -26,7 +26,7 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
       });
 
       if (sort === 'name') {
-        filteredData.sort((a, b) => {
+        filteredData = filteredData.toSorted((a, b) => {
           if (order === 'asc') {
             return a.beneficiaryName.localeCompare(b.beneficiaryName);
           }
@@ -35,7 +35,7 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
       }
 
       if (sort === 'date') {
-        filteredData.sort((a, b) => {
+        filteredData = filteredData.toSorted((a, b) => {
           if (order === 'asc') {
             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
           }
@@ -43,9 +43,7 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
         });
       }
 
-      return {
-        pages: filteredData,
-      };
+      return filteredData;
     },
   });
 

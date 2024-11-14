@@ -7,6 +7,7 @@ module.exports = {
   setupFilesAfterEnv: [
     '@testing-library/react-native/extend-expect',
     '@testing-library/jest-native/extend-expect',
+    '<rootDir>/mocks/server.ts',
   ],
   transformIgnorePatterns: [
     'node_modules/(?!' +
@@ -19,4 +20,6 @@ module.exports = {
       'react-compiler-runtime|' +
       'sentry-expo|react-native-svg)',
   ],
+
+  collectCoverageFrom: ['./src/**/*.{js,jsx,ts,tsx}', '!**/__tests__/**', '!**/__mocks__/**'],
 };

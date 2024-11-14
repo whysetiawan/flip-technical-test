@@ -1,59 +1,72 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, userEvent, screen } from '@testing-library/react-native';
 import React from 'react';
 import { Text } from 'react-native';
 
+import '@testing-library/jest-native/extend-expect';
+
 import Input from '../Input';
+
+const setupComponent = (jsx: React.ReactElement<any>) => {
+  return {
+    ...render(jsx),
+    user: userEvent.setup(),
+  };
+};
 
 describe('Input Components', () => {
   describe('Outlined', () => {
     it('renders correctly', () => {
-      const { getByPlaceholderText } = render(<Input.Outlined placeholder="Test Placeholder" />);
-      expect(getByPlaceholderText('Test Placeholder')).toBeTruthy();
-    });
-
-    it('handles focus and blur events', () => {
-      const { getByPlaceholderText } = render(<Input.Outlined placeholder="Test Placeholder" />);
-      const input = getByPlaceholderText('Test Placeholder');
-
-      fireEvent(input, 'focus');
-      expect(input.parent.props.className).toContain('border-primary');
-
-      fireEvent(input, 'blur');
-      expect(input.parent.props.className).not.toContain('border-primary');
+      setupComponent(<Input.Outlined placeholder="Test Placeholder" />);
+      expect(screen.getByPlaceholderText('Test Placeholder')).toBeOnTheScreen();
     });
 
     it('renders prefix and suffix', () => {
-      const { getByText } = render(
-        <Input.Outlined prefix={<Text>Prefix</Text>} suffix={<Text>Suffix</Text>} />,
+      setupComponent(<Input.Outlined prefix={<Text>Prefix</Text>} suffix={<Text>Suffix</Text>} />);
+      const { getByText } = screen;
+      expect(getByText('Prefix')).toBeOnTheScreen();
+      expect(getByText('Suffix')).toBeOnTheScreen();
+    });
+
+    it('handles change event', async () => {
+      const handleChange = jest.fn();
+      const { user } = setupComponent(
+        <Input.Outlined placeholder="Test Placeholder" onChangeText={handleChange} />,
       );
-      expect(getByText('Prefix')).toBeTruthy();
-      expect(getByText('Suffix')).toBeTruthy();
+
+      const { getByPlaceholderText } = screen;
+      const input = getByPlaceholderText('Test Placeholder');
+
+      await user.type(input, 'test input');
+      expect(handleChange).toHaveBeenCalledWith('test input');
     });
   });
 
   describe('Underlined', () => {
     it('renders correctly', () => {
-      const { getByPlaceholderText } = render(<Input.Underlined placeholder="Test Placeholder" />);
-      expect(getByPlaceholderText('Test Placeholder')).toBeTruthy();
-    });
-
-    it('handles focus and blur events', () => {
-      const { getByPlaceholderText } = render(<Input.Underlined placeholder="Test Placeholder" />);
-      const input = getByPlaceholderText('Test Placeholder');
-
-      fireEvent(input, 'focus');
-      expect(input.parent.props.className).toContain('border-primary');
-
-      fireEvent(input, 'blur');
-      expect(input.parent.props.className).not.toContain('border-primary');
+      setupComponent(<Input.Underlined placeholder="Test Placeholder" />);
+      expect(screen.getByPlaceholderText('Test Placeholder')).toBeOnTheScreen();
     });
 
     it('renders prefix and suffix', () => {
-      const { getByText } = render(
+      setupComponent(
         <Input.Underlined prefix={<Text>Prefix</Text>} suffix={<Text>Suffix</Text>} />,
       );
-      expect(getByText('Prefix')).toBeTruthy();
-      expect(getByText('Suffix')).toBeTruthy();
+      const { getByText } = screen;
+      expect(getByText('Prefix')).toBeOnTheScreen();
+      expect(getByText('Suffix')).toBeOnTheScreen();
+    });
+
+    it('handles change event', async () => {
+      const handleChange = jest.fn();
+      const { user } = setupComponent(
+        <Input.Underlined placeholder="Test Placeholder" onChangeText={handleChange} />,
+      );
+
+      const { getByPlaceholderText } = screen;
+      const input = getByPlaceholderText('Test Placeholder');
+
+      await user.type(input, 'test input');
+      expect(handleChange).toHaveBeenCalledWith('test input');
     });
   });
 });

@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 
 import type { Transaction } from '#/modules/transaction/domain/entities/transaction';
+import { testIds } from '#/shared/constants/testIds';
 import { cn, parseAmount, parseDate } from '#/shared/utils';
 
 interface TransactionListItemProps {
@@ -13,6 +14,7 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({ transaction }
   const router = useRouter();
   return (
     <Pressable
+      testID={testIds.trxListPage.trxItem(transaction.id)}
       onPress={() =>
         router.navigate({
           pathname: `/transaction/[id]`,
@@ -49,7 +51,12 @@ const TransactionStatusMarker: React.FC<{
 }> = ({ status }) => {
   const bgColor = cn(status === 'PENDING' ? 'bg-primary' : 'bg-green-500');
 
-  return <View className={cn('w-2 rounded-l-md h-full', bgColor)} />;
+  return (
+    <View
+      testID={testIds.trxListPage.statusMarker}
+      className={cn('w-2 rounded-l-md h-full', bgColor)}
+    />
+  );
 };
 
 const TransactionListStatus: React.FC<{

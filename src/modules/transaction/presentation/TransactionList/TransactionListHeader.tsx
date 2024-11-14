@@ -3,26 +3,31 @@ import { Pressable, Text } from 'react-native';
 import colors from 'tailwindcss/colors';
 
 import Input from '#/shared/components/Input';
+import { testIds } from '#/shared/constants/testIds';
 
-interface TransactionListHeaderProps {
+export interface TransactionListHeaderProps {
   onSearchChange: (search: string) => void;
-  onFilterPress: () => void;
-  labelFilter?: string;
+  onSortPress: () => void;
+  sortByLabel?: string;
 }
 
 const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
   onSearchChange,
-  onFilterPress,
-  labelFilter,
+  onSortPress,
+  sortByLabel,
 }) => {
   return (
     <Input.Outlined
+      testID={testIds.trxListPage.searchInput}
       onChangeText={onSearchChange}
       className="mb-4"
       placeholder="Cari nama, bank, atau nominal"
       suffix={
-        <Pressable onPress={onFilterPress} className="flex-row items-center">
-          <Text className="text-primary font-bold">{labelFilter}</Text>
+        <Pressable
+          testID={testIds.trxListPage.sortButton}
+          onPress={onSortPress}
+          className="flex-row items-center">
+          <Text className="text-primary font-bold">{sortByLabel}</Text>
           <Ionicons name="chevron-down" size={18} color="#e1734b" />
         </Pressable>
       }
