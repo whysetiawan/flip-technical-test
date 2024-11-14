@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ListRenderItem } from 'react-native';
 import { FlatList, RefreshControl, View } from 'react-native';
 
+import type { SortBy } from '#/modules/transaction/application/hooks/useTransactionsQuery';
 import { useTransactionsQuery } from '#/modules/transaction/application/hooks/useTransactionsQuery';
 import type { Transaction } from '#/modules/transaction/domain/entities/transaction';
 import TransactionListFilter from '#/modules/transaction/presentation/TransactionList/TransactionListFilter';
@@ -18,9 +19,18 @@ const memoizedSearch = new Map<string, Transaction[]>();
 
 const dummy = Array.from({ length: 10 }, (_, i) => ({ id: i.toString() }) as Transaction);
 
+export interface ITransactionFilter {
+  label: string;
+  value: SortBy;
+}
+
 const TransactionList = () => {
+  const [selectedFilter, setSelectedFilter] = useState<ITransactionFilter>({
+    label: 'URUTKAN',
+    value: 'none-asc',
+  });
   const [searchQuery, setSearchQuery] = useState('');
-  const { data, refetch, isFetching } = useTransactionsQuery(searchQuery, 'none-asc');
+  const { data, refetch, isFetching } = useTransactionsQuery(searchQuery, selectedFilter.value);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const trx = data?.pages.flat() ?? [];
@@ -60,6 +70,7 @@ const TransactionList = () => {
           <TransactionListHeader
             onFilterPress={_openFilter}
             onSearchChange={debounce(setSearchQuery, 500)}
+            labelFilter={selectedFilter.label}
           />
         }
         data={isFetching ? dummy : trx}
@@ -75,7 +86,12 @@ const TransactionList = () => {
         initialNumToRender={10}
         maxToRenderPerBatch={7}
       />
-      <TransactionListFilter isOpen={isFilterVisible} onClose={_closeFilter} />
+      <TransactionListFilter
+        selectedFilter={selectedFilter}
+        onSelectFilter={setSelectedFilter}
+        isOpen={isFilterVisible}
+        onClose={_closeFilter}
+      />
     </>
   );
 };

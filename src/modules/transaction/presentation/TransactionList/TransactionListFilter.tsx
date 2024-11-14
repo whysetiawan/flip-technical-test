@@ -1,51 +1,37 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Modal, Pressable, Text, View } from 'react-native';
 
+import type { ITransactionFilter } from '#/modules/transaction/presentation/TransactionList/TransactionList';
 import BackDrop from '#/shared/components/Backdrop';
 
-const FILTER_OPTIONS = [
+const FILTER_OPTIONS: ITransactionFilter[] = [
   {
     label: 'URUTKAN',
-    value: {
-      sortBy: 'none',
-      order: 'asc',
-    },
+    value: 'none-asc',
   },
   {
     label: 'Nama A-Z',
-    value: {
-      sortBy: 'name',
-      order: 'asc',
-    },
+    value: 'name-asc',
   },
   {
     label: 'Nama Z-A',
-    value: {
-      sortBy: 'name',
-      order: 'desc',
-    },
+    value: 'name-desc',
   },
   {
     label: 'Tanggal Terbaru',
-    value: {
-      sortBy: 'date',
-      order: 'asc',
-    },
+    value: 'date-desc',
   },
   {
     label: 'Tanggal Terlama',
-    value: {
-      sortBy: 'date',
-      order: 'desc',
-    },
+    value: 'date-asc',
   },
 ];
 
 interface TransactionListFilterProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedFilter?: (typeof FILTER_OPTIONS)[number]['value'];
-  onSelectFilter?: (filter: (typeof FILTER_OPTIONS)[number]['value']) => void;
+  selectedFilter?: ITransactionFilter;
+  onSelectFilter?: (filter: ITransactionFilter) => void;
 }
 
 const TransactionListFilter: React.FC<TransactionListFilterProps> = ({
@@ -60,14 +46,12 @@ const TransactionListFilter: React.FC<TransactionListFilterProps> = ({
         <BackDrop onPress={onClose}>
           <View className="bg-white w-[90%] rounded-md px-5 py-10 shadow-sm gap-y-8">
             {FILTER_OPTIONS.map((option) => {
-              const isSelected =
-                option.value.sortBy === selectedFilter?.sortBy &&
-                option.value.order === selectedFilter?.order;
+              const isSelected = option.value === selectedFilter?.value;
               return (
                 <Pressable
                   key={option.label}
                   onPress={() => {
-                    onSelectFilter?.(option.value);
+                    onSelectFilter?.(option);
                     onClose();
                   }}
                   className="flex-row items-center gap-x-2">

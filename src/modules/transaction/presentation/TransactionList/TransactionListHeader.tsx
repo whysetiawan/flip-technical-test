@@ -7,11 +7,13 @@ import Input from '#/shared/components/Input';
 interface TransactionListHeaderProps {
   onSearchChange: (search: string) => void;
   onFilterPress: () => void;
+  labelFilter?: string;
 }
 
 const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
   onSearchChange,
   onFilterPress,
+  labelFilter,
 }) => {
   return (
     <Input.Outlined
@@ -20,7 +22,7 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
       placeholder="Cari nama, bank, atau nominal"
       suffix={
         <Pressable onPress={onFilterPress} className="flex-row items-center">
-          <Text className="text-primary font-bold">URUTKAN</Text>
+          <Text className="text-primary font-bold">{labelFilter}</Text>
           <Ionicons name="chevron-down" size={18} color="#e1734b" />
         </Pressable>
       }
