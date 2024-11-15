@@ -14,7 +14,7 @@ cssInterop(SafeAreaView, {
 const Index = () => {
   return (
     <SafeAreaView className="flex-1">
-      <StatusBar translucent={false} />
+      <StatusBar translucent />
       <TransactionListPage />
     </SafeAreaView>
   );

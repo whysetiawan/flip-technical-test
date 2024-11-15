@@ -27,10 +27,10 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
           onPress={onSortPress}
           className="flex-row items-center">
           <Text className="text-primary font-bold">{sortByLabel}</Text>
-          <Ionicons name="chevron-down" size={18} color="#e1734b" />
+          <Ionicons name="chevron-down" size={20} color="#e1734b" />
         </Pressable>
       }
-      prefix={<Ionicons name="search" size={20} className="mr-2" color={colors.gray[400]} />}
+      prefix={<Ionicons name="search" size={24} color={colors.gray[400]} />}
     />
   );
 };
