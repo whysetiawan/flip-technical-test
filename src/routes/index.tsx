@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { cssInterop } from 'nativewind';
-import React from 'react';
+import React, { memo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import TransactionListPage from '#/modules/transaction/presentation/TransactionList/TransactionListPage';
@@ -20,4 +20,5 @@ const Index = () => {
   );
 };
 
-export default Index;
+// This component is memoized to prevent re-rendering on parent re-render
+export default memo(Index);

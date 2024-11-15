@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { memo } from 'react';
 import { Pressable, Text } from 'react-native';
 import colors from 'tailwindcss/colors';
 
@@ -35,4 +36,4 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
   );
 };
 
-export default TransactionListHeader;
+export default memo(TransactionListHeader);

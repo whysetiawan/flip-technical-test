@@ -1,4 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { memo } from 'react';
 import { Modal, Pressable, Text, View } from 'react-native';
 
 import type { ITransactionSort } from '#/modules/transaction/presentation/TransactionList/TransactionListPage';
@@ -72,4 +73,12 @@ const TransactionListSort: React.FC<TransactionListSortProps> = ({
   );
 };
 
-export default TransactionListSort;
+/**
+ * This will prevent the component from re-rendering if the parent component re-renders.
+ * The cause of parent re-rendering from the parent component is the state change even though the state is not used in this component.
+ *
+ * Example case that cause parent re-rendering:
+ * - User types in the search input
+ * - User refreshes the list
+ */
+export default memo(TransactionListSort);

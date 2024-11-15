@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { memo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import type { Transaction } from '#/modules/transaction/domain/entities/transaction';
@@ -77,4 +78,4 @@ const TransactionListStatus: React.FC<{
   );
 };
 
-export default TransactionListItem;
+export default memo(TransactionListItem);
