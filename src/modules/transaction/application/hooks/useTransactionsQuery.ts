@@ -14,8 +14,11 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
     queryFn: async () => {
       return transactionRepositoryImpl.getTransactions();
     },
-
     select: (data) => {
+      if (!query.data) {
+        return [];
+      }
+      const { data } = query;
       let filteredData = data.filter((item) => {
         return (
           item.beneficiaryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,7 +36,23 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
           return b.beneficiaryName.localeCompare(a.beneficiaryName);
         });
       }
+      if (sort === 'name') {
+        filteredData.sort((a, b) => {
+          if (order === 'asc') {
+            return a.beneficiaryName.localeCompare(b.beneficiaryName);
+          }
+          return b.beneficiaryName.localeCompare(a.beneficiaryName);
+        });
+      }
 
+      if (sort === 'date') {
+        filteredData.sort((a, b) => {
+          if (order === 'asc') {
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          }
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+      }
       if (sort === 'date') {
         filteredData.sort((a, b) => {
           if (order === 'asc') {
