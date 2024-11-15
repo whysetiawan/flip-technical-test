@@ -14,19 +14,25 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
     queryFn: async () => {
       return transactionRepositoryImpl.getTransactions();
     },
-
     select: (data) => {
-      let filteredData = data.filter((item) => {
-        return (
-          item.beneficiaryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.senderBank.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.beneficiaryBank.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.amount.toString().includes(searchQuery)
-        );
-      });
+      if (!data) {
+        return [];
+      }
+      let filteredData = data.slice();
+
+      if (searchQuery) {
+        filteredData = data.filter((item) => {
+          return (
+            item.beneficiaryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.senderBank.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.beneficiaryBank.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.amount.toString().includes(searchQuery)
+          );
+        });
+      }
 
       if (sort === 'name') {
-        filteredData = filteredData.toSorted((a, b) => {
+        filteredData.sort((a, b) => {
           if (order === 'asc') {
             return a.beneficiaryName.localeCompare(b.beneficiaryName);
           }
@@ -35,7 +41,7 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
       }
 
       if (sort === 'date') {
-        filteredData = filteredData.toSorted((a, b) => {
+        filteredData.sort((a, b) => {
           if (order === 'asc') {
             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
           }
