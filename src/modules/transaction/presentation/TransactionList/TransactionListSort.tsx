@@ -45,7 +45,7 @@ const TransactionListSort: React.FC<TransactionListSortProps> = ({
     <Modal transparent visible={isOpen} onRequestClose={onClose}>
       <View className="flex-1 justify-center items-center">
         <BackDrop testID={testIds.trxListPage.backdrop} onPress={onClose}>
-          <View className="bg-white z-20 w-[90%] rounded-md px-5 py-10 shadow-sm gap-y-8">
+          <View className="bg-white w-[90%] rounded-md px-5 py-10 shadow-sm gap-y-8">
             {SORT_OPTIONS.map((option) => {
               const isSelected = option.value === selectedSort?.value;
               return (
