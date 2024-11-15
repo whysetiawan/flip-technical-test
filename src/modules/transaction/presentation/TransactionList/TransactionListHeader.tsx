@@ -21,7 +21,6 @@ const TransactionListHeader: React.FC<TransactionListHeaderProps> = ({
       testID={testIds.trxListPage.searchInput}
       onChangeText={onSearchChange}
       placeholder="Cari nama, bank, atau nominal"
-      className="py-3 px-3"
       suffix={
         <Pressable
           testID={testIds.trxListPage.sortButton}
