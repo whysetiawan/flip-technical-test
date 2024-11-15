@@ -16,10 +16,10 @@ const BackDrop: React.FC<PropsWithChildren<BackDropProps>> = ({ onPress, childre
       <Pressable
         {...props}
         onPress={onPress}
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        }}
-        className={cn('absolute top-0 bottom-0 left-0 right-0', props.className && props.className)}
+        className={cn(
+          'absolute top-0 bottom-0 left-0 right-0 bg-black/50',
+          props.className && props.className,
+        )}
       />
       {children}
     </>

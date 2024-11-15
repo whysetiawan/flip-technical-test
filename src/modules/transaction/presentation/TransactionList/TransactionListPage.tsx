@@ -69,7 +69,7 @@ const TransactionList = () => {
 
   return (
     <>
-      <View className="px-4 pt-8 z-50">
+      <View className="px-4 pt-4 z-50">
         <TransactionListHeader
           onSortPress={_openSortModal}
           onSearchChange={debounce(setSearchQuery, 500)}
