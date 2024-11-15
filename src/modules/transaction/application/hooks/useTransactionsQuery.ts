@@ -15,10 +15,10 @@ export const useTransactionsQuery = (searchQuery = '', sortBy: SortBy) => {
       return transactionRepositoryImpl.getTransactions();
     },
     select: (data) => {
-      if (!query.data) {
+      if (!data) {
         return [];
       }
-      const { data } = query;
+
       let filteredData = data.filter((item) => {
         return (
           item.beneficiaryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
