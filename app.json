@@ -2,6 +2,7 @@
   "expo": {
     "name": "flip-technical-test",
     "slug": "flip-technical-test",
+    "newArchEnabled": true,
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -32,7 +33,8 @@
         {
           "root": "./src/routes"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
